@@ -1,6 +1,6 @@
 # e_belediyecilik
 
-Bu Proje Bult Bilişim Dersi  için Hazırlanmıştır
+Bu Proje Bulut Bilişim Dersi için Hazırlanmıştır
 
 ## Getting Started
 
