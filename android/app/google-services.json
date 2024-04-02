@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "623424112729",
+    "project_id": "e-belediyecilik",
+    "storage_bucket": "e-belediyecilik.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623424112729:android:08c0881a9acaa491d54948",
+        "android_client_info": {
+          "package_name": "com.example.e_belediyecilik"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvgvYy8ElC1R3oelJz7ZlkmQ1061O80OA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
