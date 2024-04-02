@@ -5,6 +5,7 @@ import 'package:e_belediyecilik/screens/intro_pages/intro_page_3.dart';
 import 'package:e_belediyecilik/screens/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -44,12 +45,13 @@ class _WelcomePageState extends State<WelcomePage> {
                     onTap: () {
                       _controller.jumpToPage(2);
                     },
-                    child: Text("skip"),
+                    child: Text("geç"),
                   ),
                   SmoothPageIndicator(controller: _controller, count: 3),
                   onLastPage
                       ? GestureDetector(
                           onTap: () {
+                            //GetX Paket Kullanımı
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -59,7 +61,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               ),
                             );
                           },
-                          child: Text("done"))
+                          child: Text("giriş"))
                       : GestureDetector(
                           onTap: () {
                             _controller.nextPage(
@@ -67,7 +69,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               curve: Curves.easeIn,
                             );
                           },
-                          child: Text("next")),
+                          child: Text("devam")),
                 ],
               ))
         ],
