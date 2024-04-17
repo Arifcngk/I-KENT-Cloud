@@ -141,17 +141,18 @@ class SignupPage extends StatelessWidget {
                   children: <Widget>[
                     const Text("Zaten Bir Hesabım var?"),
                     TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginPage(),
-                              ));
-                        },
-                        child: const Text(
-                          "Giriş Sayfası",
-                          style: TextStyle(color: Colors.black),
-                        ))
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ));
+                      },
+                      child: const Text(
+                        "Giriş Sayfası",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    )
                   ],
                 )
               ],

@@ -51,12 +51,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBv_nujVde71QRsZ7V7ElDZzLHlXxhJSAM',
-    appId: '1:623424112729:web:6d546a1f2a100eb4d54948',
+    appId: '1:623424112729:web:2d2cc233616ac2cfd54948',
     messagingSenderId: '623424112729',
     projectId: 'e-belediyecilik',
     authDomain: 'e-belediyecilik.firebaseapp.com',
     storageBucket: 'e-belediyecilik.appspot.com',
-    measurementId: 'G-L3JXV6W07T',
+    measurementId: 'G-37WCW14P07',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
