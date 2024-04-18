@@ -3,6 +3,7 @@ import 'package:e_belediyecilik/screens/favorite_page.dart';
 import 'package:e_belediyecilik/screens/home_page.dart';
 import 'package:e_belediyecilik/screens/login_page.dart';
 import 'package:e_belediyecilik/screens/services.dart';
+import 'package:e_belediyecilik/screens/services_pages/clean_city.dart';
 import 'package:e_belediyecilik/screens/welcome_page.dart';
 import 'package:e_belediyecilik/widget/button_navbar.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'E-Belediyecilik Uygulaması',
       debugShowCheckedModeBanner: false,
-      home: ServicesScreen(),
+      home: CleanCityScreen(),
     );
   }
 }

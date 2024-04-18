@@ -1,4 +1,7 @@
 import 'package:e_belediyecilik/misc/colors.dart';
+import 'package:e_belediyecilik/screens/favorite_page.dart';
+import 'package:e_belediyecilik/screens/services.dart';
+import 'package:e_belediyecilik/screens/setting_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -57,21 +60,22 @@ class _HomePageState extends State<HomePage> {
                 crossAxisSpacing: 40,
                 mainAxisSpacing: 30,
                 children: [
-                  itemDashboard(
-                      'Hizmetler', CupertinoIcons.person_2_alt, Colors.orange),
-                  itemDashboard(
-                      'Engelsiz Belediye', CupertinoIcons.ear, Colors.black),
-                  itemDashboard('Harita', CupertinoIcons.map, Colors.purple),
-                  itemDashboard(
-                      'Mesajlarım', CupertinoIcons.chat_bubble_2, Colors.brown),
+                  itemDashboard('Hizmetler', CupertinoIcons.person_2_alt,
+                      Colors.orange, ServicesScreen()),
+                  itemDashboard('Engelsiz Belediye', CupertinoIcons.ear,
+                      Colors.black, ServicesScreen()),
+                  itemDashboard('Harita', CupertinoIcons.map, Colors.purple,
+                      ServicesScreen()),
+                  itemDashboard('Mesajlarım', CupertinoIcons.chat_bubble_2,
+                      Colors.brown, ServicesScreen()),
                   itemDashboard('E-İhale', CupertinoIcons.money_dollar_circle,
-                      Colors.indigo),
+                      Colors.indigo, ServicesScreen()),
                   itemDashboard('Hakkımızda', Icons.account_balance_outlined,
-                      Colors.teal),
-                  itemDashboard(
-                      'Favorilerim', CupertinoIcons.heart_fill, Colors.red),
-                  itemDashboard(
-                      'Ayarlar', CupertinoIcons.settings, Colors.blue),
+                      Colors.teal, ServicesScreen()),
+                  itemDashboard('Favorilerim', CupertinoIcons.heart_fill,
+                      Colors.red, FavoriteScreen()),
+                  itemDashboard('Ayarlar', CupertinoIcons.settings, Colors.blue,
+                      SettingsScreen()),
                 ],
               ),
             ),
@@ -82,31 +86,40 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  itemDashboard(String title, IconData iconData, Color background) => Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                  offset: const Offset(0, 5),
-                  color: Theme.of(context).primaryColor.withOpacity(.2),
-                  spreadRadius: 2,
-                  blurRadius: 5)
-            ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: background,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(iconData, color: Colors.white)),
-            const SizedBox(height: 8),
-            Text(title.toUpperCase(),
-                style: Theme.of(context).textTheme.titleMedium)
-          ],
+  itemDashboard(String title, IconData iconData, Color background,
+          Widget destinationPage) =>
+      GestureDetector(
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => destinationPage,
+            )),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                    offset: const Offset(0, 5),
+                    color: Theme.of(context).primaryColor.withOpacity(.2),
+                    spreadRadius: 2,
+                    blurRadius: 5)
+              ]),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: background,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(iconData, color: Colors.white)),
+              const SizedBox(height: 8),
+              Text(title.toUpperCase(),
+                  style: Theme.of(context).textTheme.titleMedium)
+            ],
+          ),
         ),
       );
 }
