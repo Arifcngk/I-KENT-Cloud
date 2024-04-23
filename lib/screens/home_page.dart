@@ -1,5 +1,6 @@
 import 'package:e_belediyecilik/misc/colors.dart';
 import 'package:e_belediyecilik/screens/favorite_page.dart';
+import 'package:e_belediyecilik/screens/google_maps_marker_pages/map_page.dart';
 import 'package:e_belediyecilik/screens/services.dart';
 import 'package:e_belediyecilik/screens/setting_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                   itemDashboard('Engelsiz Belediye', CupertinoIcons.ear,
                       Colors.black, ServicesScreen()),
                   itemDashboard('Harita', CupertinoIcons.map, Colors.purple,
-                      ServicesScreen()),
+                      GoogleMapView()),
                   itemDashboard('Mesajlarım', CupertinoIcons.chat_bubble_2,
                       Colors.brown, ServicesScreen()),
                   itemDashboard('E-İhale', CupertinoIcons.money_dollar_circle,
