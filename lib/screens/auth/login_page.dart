@@ -1,6 +1,6 @@
 import 'package:e_belediyecilik/misc/colors.dart';
 import 'package:e_belediyecilik/screens/home_page.dart';
-import 'package:e_belediyecilik/screens/signup_page.dart';
+import 'package:e_belediyecilik/screens/auth/signup_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'package:e_belediyecilik/screens/home_page.dart';
 import 'package:e_belediyecilik/screens/intro_pages/intro_page_1.dart';
 import 'package:e_belediyecilik/screens/intro_pages/intro_page_2.dart';
 import 'package:e_belediyecilik/screens/intro_pages/intro_page_3.dart';
-import 'package:e_belediyecilik/screens/login_page.dart';
+import 'package:e_belediyecilik/screens/auth/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

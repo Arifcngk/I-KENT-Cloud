@@ -1,1 +1,1 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"e-belediyecilik","appId":"1:623424112729:android:08c0881a9acaa491d54948","fileOutput":"android/app/google-services.json"}}}}}
+{"flutter":{"platforms":{"android":{"default":{"projectId":"e-belediyecilik","appId":"1:623424112729:android:08c0881a9acaa491d54948","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"e-belediyecilik","configurations":{"android":"1:623424112729:android:08c0881a9acaa491d54948","web":"1:623424112729:web:c01f3038b1ce7377d54948"}}}}}}
