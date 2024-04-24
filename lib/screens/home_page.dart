@@ -1,7 +1,7 @@
 import 'package:e_belediyecilik/misc/colors.dart';
 import 'package:e_belediyecilik/screens/favorite_page.dart';
 import 'package:e_belediyecilik/screens/google_maps_marker_pages/map_page.dart';
-import 'package:e_belediyecilik/screens/services.dart';
+import 'package:e_belediyecilik/screens/services_pages/services.dart';
 import 'package:e_belediyecilik/screens/setting_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,10 @@
 import 'package:e_belediyecilik/misc/colors.dart';
+import 'package:e_belediyecilik/screens/auth/login_page.dart';
+import 'package:e_belediyecilik/screens/google_maps_marker_pages/map_page.dart';
 import 'package:e_belediyecilik/screens/services_pages/clean_city.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ServicesScreen extends StatefulWidget {
   const ServicesScreen({super.key});
@@ -11,6 +14,8 @@ class ServicesScreen extends StatefulWidget {
 }
 
 class _ServicesScreenState extends State<ServicesScreen> {
+  List<bool> isFavorite = List.generate(9, (index) => false);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +34,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 const SizedBox(height: 50),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-                  title: Text('Hizmetlerim',
+                  title: Text('Hizmetler',
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall
@@ -64,14 +69,24 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 crossAxisSpacing: 40,
                 mainAxisSpacing: 30,
                 children: [
-                  itemDashboard('Temiz Şehir', CupertinoIcons.archivebox_fill,
-                      Colors.green, CleanCityScreen()),
-                  itemDashboard('Yol Çalışması', CupertinoIcons.ear,
-                      Colors.black, CleanCityScreen()),
-                  itemDashboard('Patili Dostlarımız', CupertinoIcons.map,
-                      Colors.purple, CleanCityScreen()),
-                  itemDashboard('İhbar Blok', CupertinoIcons.chat_bubble_2,
-                      Colors.brown, CleanCityScreen()),
+                  itemDashboard(' Yol İhbar   \n   Bildirimi', "img/path.png",
+                      CleanCityScreen(), 0),
+                  itemDashboard('Çevre temizlik \n     Bildirimi',
+                      "img/trash.png", CleanCityScreen(), 1),
+                  itemDashboard(
+                      'Evde Bakım', "img/patient.png", CleanCityScreen(), 2),
+                  itemDashboard(
+                      'Patili Dotlarımız', "img/pets.png", GoogleMapView(), 3),
+                  itemDashboard('İş Yeri Ruhsat \n Sorgulama', "img/shop.png",
+                      CleanCityScreen(), 4),
+                  itemDashboard(
+                      'Nöbetçi Eczane', "img/eczane.png", CleanCityScreen(), 5),
+                  itemDashboard(
+                      ' Bilgi Talebi', "img/support.png", CleanCityScreen(), 6),
+                  itemDashboard('Arsa e-Beyanı \n Bildirimi', "img/lanf.png",
+                      CleanCityScreen(), 7),
+                  itemDashboard('Moloz \n Bildirimi', "img/rubble.png",
+                      CleanCityScreen(), 8),
                 ],
               ),
             ),
@@ -82,8 +97,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
     );
   }
 
-  itemDashboard(String title, IconData iconData, Color background,
-          Widget servicesPages) =>
+  itemDashboard(
+          String title, String imagePath, Widget servicesPages, int index) =>
       GestureDetector(
         onTap: () => Navigator.push(
             context,
@@ -101,19 +116,44 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     spreadRadius: 2,
                     blurRadius: 5)
               ]),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
+            alignment: Alignment.topRight,
             children: [
-              Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: background,
-                    shape: BoxShape.circle,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.asset(
+                      imagePath,
+                      width: 60,
+                      height: 60,
+                    ),
                   ),
-                  child: Icon(iconData, color: Colors.white)),
-              const SizedBox(height: 8),
-              Text(title.toUpperCase(),
-                  style: Theme.of(context).textTheme.titleMedium)
+                  const SizedBox(height: 8),
+                  Center(
+                    child: Text(title.toUpperCase(),
+                        style: Theme.of(context).textTheme.titleMedium),
+                  )
+                ],
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isFavorite[index] = !isFavorite[index];
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    isFavorite[index] ? Icons.favorite : Icons.favorite_border,
+                    color: isFavorite[index] ? Colors.red : Colors.grey,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
