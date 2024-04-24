@@ -1,29 +1,43 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_belediyecilik/misc/colors.dart';
+import 'package:e_belediyecilik/provider/auth_provider.dart';
 import 'package:e_belediyecilik/screens/home_page.dart';
 import 'package:e_belediyecilik/screens/auth/signup_page.dart';
+import 'package:firebase_auth/firebase_auth.dart' as x;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SafeArea(
-        child: Scaffold(
-          body: SingleChildScrollView(
-            child: Container(
-              margin: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _logo(context),
-                  _inputField(context),
-                  _forgotPassword(context),
-                  _signup(context),
-                ],
-              ),
+    final authProvider = Provider.of<AuthProvider>(context);
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.all(24),
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _logo(context),
+                _inputField(context),
+                _forgotPassword(context),
+                _signup(context),
+              ],
             ),
           ),
         ),
@@ -50,10 +64,14 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _inputField(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextField(
+          onTap: () {},
+          controller: _emailController,
           decoration: InputDecoration(
               hintText: "Kullanıcı Adı:",
               border: OutlineInputBorder(
@@ -65,6 +83,7 @@ class LoginPage extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         TextField(
+          controller: _passwordController,
           decoration: InputDecoration(
             hintText: "Parola",
             border: OutlineInputBorder(
@@ -79,12 +98,36 @@ class LoginPage extends StatelessWidget {
         const SizedBox(height: 10),
         ElevatedButton(
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      HomePage()), // Burada DashboardPage'e geçiş yapılacak sayfayı belirtmeniz gerekiyor
-            );
+            // Burada DashboardPage'e geçiş yapılacak sayfayı belirtmeniz gerekiyor
+            authProvider
+                .loginWithEmail(_emailController.text, _passwordController.text)
+                .then((value) {
+              if (value != null) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    ));
+              }else {
+                    // Diğer hatalar için genel bir hata mesajı göster
+                    AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.error,
+                      animType: AnimType.topSlide,
+                      showCloseIcon: true,
+                      title: "Lütfen Kayıt Olun !",
+                      desc:
+                          "Uygulamayı kullanabilmeniz için önce kayıt olmanız gerekmektetir.!",
+                      btnOkOnPress: () {
+                         Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignupPage(),
+                    ));
+                      },
+                    ).show();
+                  }
+            });
           },
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),

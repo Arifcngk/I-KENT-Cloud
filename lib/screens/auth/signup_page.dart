@@ -1,10 +1,8 @@
 import 'package:e_belediyecilik/misc/colors.dart';
-import 'package:e_belediyecilik/model/user_model.dart';
 import 'package:e_belediyecilik/provider/auth_provider.dart';
 import 'package:e_belediyecilik/screens/auth/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:e_belediyecilik/services/auth_service.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart' as x;
 
@@ -21,11 +19,11 @@ class _SignupPageState extends State<SignupPage> {
   final _passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final bool status = false;
-  final space = SizedBox(height: 20);
+  final space = const SizedBox(height: 20);
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
+    // final authProvider = Provider.of<AuthProvider>(context);
 
     //  authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
@@ -101,6 +99,7 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   Container googleRegisterBtn() {
+    final authProvider = Provider.of<AuthProvider>(context);
     return Container(
       height: 45,
       decoration: BoxDecoration(
@@ -118,7 +117,28 @@ class _SignupPageState extends State<SignupPage> {
         ],
       ),
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          authProvider.registerWithGoogle().then((value) {
+            if (value != null) {
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.success,
+                animType: AnimType.topSlide,
+                showCloseIcon: true,
+                title: "Kayıt İşleminiz Başarılı !",
+                desc:
+                    "E-belediye ailemize hoşgeldiniz hizetlerden yararlanmak için giriş yapınız !",
+                btnOkOnPress: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ));
+                },
+              ).show();
+            }
+          });
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -154,7 +174,7 @@ class _SignupPageState extends State<SignupPage> {
           onPressed: () {
             if (formKey.currentState!.validate()) {
               authProvider
-                  .register(_emailController.text, _passwordController.text)
+                  .register(_emailController.text, _passwordController.text, )
                   .then((value) {
                 // Kayıt işlemi başarılı oldu
                 AwesomeDialog(
@@ -227,8 +247,12 @@ class _SignupPageState extends State<SignupPage> {
     return TextFormField(
       controller: _passwordController,
       validator: (value) {
-        if (value!.length < 3) {
+        if (value == null || value.isEmpty) {
+          return "Lütfen bir değer girin";
+        } else if (value.length < 3) {
           return "En az 3 karakter giriniz";
+        } else {
+          return null; // Geçerli değer
         }
       },
       decoration: InputDecoration(
@@ -249,7 +273,7 @@ class _SignupPageState extends State<SignupPage> {
       controller: _emailController,
       validator: (value) {
         bool emailValid = RegExp(
-                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
             .hasMatch(value!);
         if (!emailValid) {
           return "Lütfen geçerli bir email adresi giriniz";
