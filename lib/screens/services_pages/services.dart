@@ -1,10 +1,8 @@
 import 'package:e_belediyecilik/misc/colors.dart';
-import 'package:e_belediyecilik/screens/auth/login_page.dart';
 import 'package:e_belediyecilik/screens/google_maps_marker_pages/map_page.dart';
 import 'package:e_belediyecilik/screens/services_pages/clean_city.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ServicesScreen extends StatefulWidget {
   const ServicesScreen({super.key});

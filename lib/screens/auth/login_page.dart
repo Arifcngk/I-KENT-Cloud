@@ -1,12 +1,16 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_belediyecilik/misc/colors.dart';
+import 'package:e_belediyecilik/model/api_response.dart';
+import 'package:e_belediyecilik/model/user_api.dart';
 import 'package:e_belediyecilik/provider/auth_provider.dart';
 import 'package:e_belediyecilik/screens/home_page.dart';
 import 'package:e_belediyecilik/screens/auth/signup_page.dart';
+import 'package:e_belediyecilik/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart' as x;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
@@ -19,10 +23,34 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  bool _obscureText = true; // Başlangıçta parolanın gizli olduğunu varsayalım.
+
+  void _loginUser() async {
+    ApiResponse response =
+        await login(_emailController.text, _passwordController.text);
+    if (response.error == null) {
+      _saveAndRedirectHome(response.data as User);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('${response.error}'),
+      ));
+    }
+  }
+
+  void _saveAndRedirectHome(User user) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString('token', user.token ?? '');
+    await pref.setInt('userId', user.id ?? 0);
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+        (route) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
+    // final authProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -87,47 +115,63 @@ class _LoginPageState extends State<LoginPage> {
           decoration: InputDecoration(
             hintText: "Parola",
             border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: BorderSide.none),
+              borderRadius: BorderRadius.circular(18),
+              borderSide: BorderSide.none,
+            ),
             fillColor: Colors.blueGrey.withOpacity(0.1),
             filled: true,
             prefixIcon: const Icon(Icons.password),
+            suffixIcon: IconButton(
+              icon:
+                  Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+              onPressed: () {
+                setState(() {
+                  _obscureText =
+                      !_obscureText; // Butona basıldığında gizlilik durumunu değiştir.
+                });
+              },
+            ),
           ),
-          obscureText: true,
+          obscureText: _obscureText, // Parolanın gizlilik durumunu belirler.
         ),
         const SizedBox(height: 10),
         ElevatedButton(
           onPressed: () {
-            // Burada DashboardPage'e geçiş yapılacak sayfayı belirtmeniz gerekiyor
-            authProvider
-                .loginWithEmail(_emailController.text, _passwordController.text)
-                .then((value) {
-              if (value != null) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ));
-              }else {
-                    // Diğer hatalar için genel bir hata mesajı göster
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.error,
-                      animType: AnimType.topSlide,
-                      showCloseIcon: true,
-                      title: "Lütfen Kayıt Olun !",
-                      desc:
-                          "Uygulamayı kullanabilmeniz için önce kayıt olmanız gerekmektetir.!",
-                      btnOkOnPress: () {
-                         Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignupPage(),
-                    ));
-                      },
-                    ).show();
-                  }
-            });
+            // Google Auth Kullanmak isteyenler için aşağıda yorum satırına alınmış kodu aktif edebilirler.
+
+            // authProvider
+            //     .loginWithEmail(_emailController.text, _passwordController.text)
+            //     .then((value) {
+            //   if (value != null) {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => const HomePage(),
+            //         ));
+            //   } else {
+            //     AwesomeDialog(
+            //       context: context,
+            //       dialogType: DialogType.error,
+            //       animType: AnimType.topSlide,
+            //       showCloseIcon: true,
+            //       title: "Lütfen Kayıt Olun !",
+            //       desc:
+            //           "Uygulamayı kullanabilmeniz için önce kayıt olmanız gerekmektetir.!",
+            //       btnOkOnPress: () {
+            //         Navigator.push(
+            //             context,
+            //             MaterialPageRoute(
+            //               builder: (context) => const SignupPage(),
+            //             ));
+            //       },
+            //     ).show();
+            //   }
+            // });
+
+            // Api Auth Kullanı Aktifdir Dilerseniz yukarıdan google firebase auth kodlarını aktifleştirebilirsiniz
+            if (formKey.currentState!.validate()) {
+              _loginUser();
+            }
           },
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
