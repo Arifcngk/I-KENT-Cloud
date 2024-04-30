@@ -57,33 +57,33 @@ class _CleanCityScreenState extends State<CleanCityScreen> {
   Widget build(BuildContext context) {
     List<Step> steps = [
       Step(
-        title: Text(
+        title: const Text(
           'İhbar Başlığı',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         content: TextFormField(
           controller: ihbarBasligiController,
-          decoration: InputDecoration(labelText: 'İhbar Başlığını Giriniz'),
+          decoration: const InputDecoration(labelText: 'İhbar Başlığını Giriniz'),
         ),
       ),
       Step(
-        title: Text('İhbar İçeriği',
+        title: const Text('İhbar İçeriği',
             style: TextStyle(fontWeight: FontWeight.bold)),
         content: TextFormField(
           controller: ihbarIcerikController,
-          decoration: InputDecoration(labelText: 'İhbar İçeriği'),
+          decoration: const InputDecoration(labelText: 'İhbar İçeriği'),
         ),
       ),
       Step(
         title:
-            Text('İhbar Adresi', style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('İhbar Adresi', style: TextStyle(fontWeight: FontWeight.bold)),
         content: TextFormField(
           controller: ihbarIcerikController,
-          decoration: InputDecoration(labelText: 'İhbar Adresi'),
+          decoration: const InputDecoration(labelText: 'İhbar Adresi'),
         ),
       ),
       Step(
-        title: Text('Fotoğraf', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Fotoğraf', style: TextStyle(fontWeight: FontWeight.bold)),
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -91,13 +91,13 @@ class _CleanCityScreenState extends State<CleanCityScreen> {
               onPressed: () {
                 _pickImage(ImageSource.gallery); // Galeriden fotoğraf seçme
               },
-              child: Text('Galeriden Fotoğraf Seç'),
+              child: const Text('Galeriden Fotoğraf Seç'),
             ),
             ElevatedButton(
               onPressed: () {
                 _pickImage(ImageSource.camera); // Kameradan fotoğraf çekme
               },
-              child: Text('Kameradan Fotoğraf Çek'),
+              child: const Text('Kameradan Fotoğraf Çek'),
             ),
             if (_imageFile != null)
               Image.file(
@@ -109,11 +109,11 @@ class _CleanCityScreenState extends State<CleanCityScreen> {
         ),
       ),
       Step(
-        title: Text('Çöp Konteynır ID',
+        title: const Text('Çöp Konteynır ID',
             style: TextStyle(fontWeight: FontWeight.bold)),
         content: TextFormField(
           controller: copKonteynirIdController,
-          decoration: InputDecoration(labelText: 'Çöp Konteynır ID'),
+          decoration: const InputDecoration(labelText: 'Çöp Konteynır ID'),
         ),
       ),
     ];
@@ -226,7 +226,7 @@ class _CleanCityScreenState extends State<CleanCityScreen> {
                     ),
                   );
                 },
-                child: Text("Bilgileri Gönder"))
+                child: const Text("Bilgileri Gönder"))
           ],
         ),
       ),

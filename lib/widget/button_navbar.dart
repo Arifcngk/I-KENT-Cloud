@@ -23,13 +23,13 @@ class _ButtonNavbarWidgetState extends State<ButtonNavbarWidget> {
       body: _getPage(_pageIndex),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: AppColors.blueColor,
-        animationDuration: Duration(milliseconds: 300),
+        animationDuration: const Duration(milliseconds: 300),
         onTap: (index) {
           setState(() {
             _pageIndex = index;
           });
         },
-        items: [
+        items: const [
           Icon(Icons.home),
           Icon(Icons.favorite),
           Icon(Icons.settings),
@@ -41,9 +41,9 @@ class _ButtonNavbarWidgetState extends State<ButtonNavbarWidget> {
   Widget _getPage(int index) {
     switch (index) {
       case 0:
-        return HomePage();
+        return const HomePage();
       case 1:
-        return FavoriteScreen();
+        return const FavoriteScreen();
       case 2:
         return SettingsScreen();
       default:

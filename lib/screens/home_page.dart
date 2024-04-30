@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_belediyecilik/misc/colors.dart';
 import 'package:e_belediyecilik/screens/favorite_page.dart';
 import 'package:e_belediyecilik/screens/google_maps_marker_pages/map_page.dart';
+import 'package:e_belediyecilik/screens/ihbar_akis.dart';
 import 'package:e_belediyecilik/screens/services_pages/services.dart';
 import 'package:e_belediyecilik/screens/setting_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -90,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                   itemDashboard('Patili \n Dostlarımız', CupertinoIcons.map,
                       Colors.purple, GoogleMapView()),
                   itemDashboard('İhbar Akış', CupertinoIcons.chat_bubble_2,
-                      Colors.brown, ServicesScreen()),
+                      Colors.brown, PostScreen()),
                   itemDashboard('E-İhale', CupertinoIcons.money_dollar_circle,
                       Colors.indigo, ServicesScreen()),
                   itemDashboard('Hakkımızda', Icons.account_balance_outlined,
@@ -109,7 +110,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  itemDashboard(String title, IconData iconData, Color background,
+   itemDashboard(String title, IconData iconData, Color background,
           Widget destinationPage) =>
       GestureDetector(
         onTap: () => Navigator.push(

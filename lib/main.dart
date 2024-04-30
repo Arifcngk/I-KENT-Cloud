@@ -2,10 +2,7 @@ import 'package:e_belediyecilik/firebase_options.dart';
 import 'package:e_belediyecilik/provider/auth_provider.dart';
 import 'package:e_belediyecilik/screens/auth/login_page.dart';
 import 'package:e_belediyecilik/screens/home_page.dart';
-import 'package:e_belediyecilik/screens/services_pages/road_notice.dart';
-import 'package:e_belediyecilik/screens/services_pages/sentius_eczane.dart';
-import 'package:e_belediyecilik/screens/welcome_page.dart';
-
+import 'package:e_belediyecilik/screens/services_pages/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,7 +32,7 @@ class MyApp extends StatelessWidget {
       child: const MaterialApp(
         title: 'E-Belediyecilik Uygulaması',
         debugShowCheckedModeBanner: false,
-        home: SentiusEczaneScreen(),
+        home: LoginPage(),
       ),
     );
   }

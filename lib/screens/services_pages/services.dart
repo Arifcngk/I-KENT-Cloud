@@ -1,7 +1,9 @@
 import 'package:e_belediyecilik/misc/colors.dart';
 import 'package:e_belediyecilik/screens/google_maps_marker_pages/map_page.dart';
+import 'package:e_belediyecilik/screens/moloz_bildir.dart';
 import 'package:e_belediyecilik/screens/services_pages/clean_city.dart';
 import 'package:e_belediyecilik/screens/services_pages/road_notice.dart';
+import 'package:e_belediyecilik/screens/services_pages/sentius_eczane.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -69,23 +71,23 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 mainAxisSpacing: 30,
                 children: [
                   itemDashboard(' Yol İhbar   \n   Bildirimi', "img/path.png",
-                      RoadNoticeScreen(), 0),
+                      const RoadNoticeScreen(), 0),
                   itemDashboard('Çevre temizlik \n     Bildirimi',
-                      "img/trash.png", CleanCityScreen(), 1),
-                  itemDashboard(
-                      'Evde Bakım', "img/patient.png", CleanCityScreen(), 2),
-                  itemDashboard(
-                      'Patili Dotlarımız', "img/pets.png", GoogleMapView(), 3),
+                      "img/trash.png", const CleanCityScreen(), 1),
+                  itemDashboard('Evde Bakım', "img/patient.png",
+                      const CleanCityScreen(), 2),
+                  itemDashboard('Patili Dotlarımız', "img/pets.png",
+                      const GoogleMapView(), 3),
                   itemDashboard('İş Yeri Ruhsat \n Sorgulama', "img/shop.png",
-                      CleanCityScreen(), 4),
-                  itemDashboard(
-                      'Nöbetçi Eczane', "img/eczane.png", CleanCityScreen(), 5),
-                  itemDashboard(
-                      ' Bilgi Talebi', "img/support.png", CleanCityScreen(), 6),
+                      const CleanCityScreen(), 4),
+                  itemDashboard('Nöbetçi Eczane', "img/eczane.png",
+                      const SentiusEczaneScreen(), 5),
+                  itemDashboard(' Bilgi Talebi', "img/support.png",
+                      const CleanCityScreen(), 6),
                   itemDashboard('Arsa e-Beyanı \n Bildirimi', "img/lanf.png",
-                      CleanCityScreen(), 7),
+                      const CleanCityScreen(), 7),
                   itemDashboard('Moloz \n Bildirimi', "img/rubble.png",
-                      CleanCityScreen(), 8),
+                      const MolozBildirimScreen(), 8),
                 ],
               ),
             ),
@@ -123,7 +125,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: Image.asset(

@@ -11,7 +11,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.blueColor,
-      body: Center(
+      body: const Center(
         child: Text('Ayarlar içeriği'),
       ),
     );

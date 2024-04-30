@@ -15,14 +15,14 @@ class IntroPage2 extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.1,
               ), // Metnin boşluk değeri
-              Text(
+              const Text(
                 "Sosyal Belediyecilik",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
+              const Text(
                 "Birlikte Çalışma",
                 style: TextStyle(
                   fontSize: 16,

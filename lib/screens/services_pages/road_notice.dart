@@ -103,7 +103,7 @@ class _RoadNoticeScreenState extends State<RoadNoticeScreen> {
                     : Image.memory(_imageBytes!, fit: BoxFit.cover),
               ),
             ),
-            SizedBox(height: 20), // Boşluk ekledik
+            const SizedBox(height: 20), // Boşluk ekledik
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
@@ -131,9 +131,9 @@ class _RoadNoticeScreenState extends State<RoadNoticeScreen> {
                 maxLines: 3,
               ),
             ),
-            SizedBox(height: 20), // Boşluk ekledik
+            const SizedBox(height: 20), // Boşluk ekledik
             if (loading)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(),
               )
             else if (isUploaded)
@@ -151,7 +151,7 @@ class _RoadNoticeScreenState extends State<RoadNoticeScreen> {
             else
               ElevatedButton(
                 onPressed: _saveImage,
-                child: Text('Gönder'),
+                child: const Text('Gönder'),
               ),
           ],
         ),
@@ -159,7 +159,7 @@ class _RoadNoticeScreenState extends State<RoadNoticeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _getImage,
         tooltip: 'Select image',
-        child: Icon(Icons.camera_alt),
+        child: const Icon(Icons.camera_alt),
       ),
     );
   }
