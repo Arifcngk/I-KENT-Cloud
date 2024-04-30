@@ -8,9 +8,9 @@ class AuthProvider extends ChangeNotifier {
 
   UserModel user = UserModel();
 // email ve parola ile giriş yap
-  Future register(String email, String password) async {
+  Future register(String name, String email, String password) async {
     try {
-      return authService.register(email, password);
+      return authService.register(name, email, password);
     } catch (e) {
       print(e.toString());
     }

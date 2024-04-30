@@ -1,6 +1,7 @@
 import 'package:e_belediyecilik/misc/colors.dart';
 import 'package:e_belediyecilik/provider/auth_provider.dart';
 import 'package:e_belediyecilik/screens/auth/login_page.dart';
+import 'package:e_belediyecilik/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -17,15 +18,17 @@ class _SignupPageState extends State<SignupPage> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _passwordConfirmController = TextEditingController();
+  bool loadingStatus = false;
+
   final formKey = GlobalKey<FormState>();
   final bool status = false;
   final space = const SizedBox(height: 20);
 
   @override
   Widget build(BuildContext context) {
-    // final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
 
-    //  authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -44,8 +47,10 @@ class _SignupPageState extends State<SignupPage> {
                     nameTxtField(), // name input alanı
                     space,
                     emailTxtField(), // email input alanı
-                    const SizedBox(height: 20),
-                    passwordTxtField(), // password input alanı
+                    space,
+                    passwordTxtField(),
+                    space,
+                    passwordConfirimTxtField() // password input alanı
                   ],
                 ),
                 registerBtn(context),
@@ -98,6 +103,7 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
+  //-----------------Google ile giriş yapmak için Kodları aktifleştirin------------
   Container googleRegisterBtn() {
     final authProvider = Provider.of<AuthProvider>(context);
     return Container(
@@ -132,7 +138,7 @@ class _SignupPageState extends State<SignupPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LoginPage(),
+                        builder: (context) => const LoginPage(),
                       ));
                 },
               ).show();
@@ -172,9 +178,14 @@ class _SignupPageState extends State<SignupPage> {
         padding: const EdgeInsets.only(top: 3, left: 3),
         child: ElevatedButton(
           onPressed: () {
+            //-----------------Firebase  ile giriş yapmak için Kodları aktifleştirin------------
             if (formKey.currentState!.validate()) {
               authProvider
-                  .register(_emailController.text, _passwordController.text, )
+                  .register(
+                _nameController.text,
+                _emailController.text,
+                _passwordController.text,
+              )
                   .then((value) {
                 // Kayıt işlemi başarılı oldu
                 AwesomeDialog(
@@ -189,7 +200,7 @@ class _SignupPageState extends State<SignupPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LoginPage(),
+                          builder: (context) => const HomePage(),
                         ));
                   },
                 ).show();
@@ -230,6 +241,9 @@ class _SignupPageState extends State<SignupPage> {
                 }
               });
             }
+            //******************************** */
+
+            //Api Register Servisi Baslangıcı
           },
           child: const Text(
             "Kayıt Ol",
@@ -257,6 +271,25 @@ class _SignupPageState extends State<SignupPage> {
       },
       decoration: InputDecoration(
         hintText: "Parola",
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18),
+            borderSide: BorderSide.none),
+        fillColor: Colors.blueGrey.withOpacity(0.1),
+        filled: true,
+        prefixIcon: const Icon(Icons.password),
+      ),
+      obscureText: true,
+    );
+  }
+
+  TextFormField passwordConfirimTxtField() {
+    return TextFormField(
+      controller: _passwordConfirmController,
+      validator: (value) => value != _passwordController.text
+          ? 'Parola Farklı Girilemez , Lütfen Kontrol Ediniz'
+          : null,
+      decoration: InputDecoration(
+        hintText: "Parola Tekrar",
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(18),
             borderSide: BorderSide.none),

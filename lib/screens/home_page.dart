@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_belediyecilik/misc/colors.dart';
 import 'package:e_belediyecilik/screens/favorite_page.dart';
 import 'package:e_belediyecilik/screens/google_maps_marker_pages/map_page.dart';
 import 'package:e_belediyecilik/screens/services_pages/services.dart';
 import 'package:e_belediyecilik/screens/setting_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +16,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  String? userName;
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  Future<void> getCurrentUser() async {
+    final User? user = _auth.currentUser;
+    final DocumentSnapshot snapshot =
+        await _firestore.collection('users').doc(user!.uid).get();
+    setState(() {
+      userName = snapshot['displayName'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 50),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-                  title: Text('Merhaba Arif!',
+                  title: Text('Merhaba $userName ',
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall

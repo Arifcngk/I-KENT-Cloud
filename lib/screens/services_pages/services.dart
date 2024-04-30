@@ -1,6 +1,7 @@
 import 'package:e_belediyecilik/misc/colors.dart';
 import 'package:e_belediyecilik/screens/google_maps_marker_pages/map_page.dart';
 import 'package:e_belediyecilik/screens/services_pages/clean_city.dart';
+import 'package:e_belediyecilik/screens/services_pages/road_notice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -68,7 +69,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 mainAxisSpacing: 30,
                 children: [
                   itemDashboard(' Yol İhbar   \n   Bildirimi', "img/path.png",
-                      CleanCityScreen(), 0),
+                      RoadNoticeScreen(), 0),
                   itemDashboard('Çevre temizlik \n     Bildirimi',
                       "img/trash.png", CleanCityScreen(), 1),
                   itemDashboard(
