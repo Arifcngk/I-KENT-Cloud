@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:e_belediyecilik/screens/services_pages/services.dart';
 import 'package:e_belediyecilik/services/image_api_cloud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +23,8 @@ class _RoadNoticeScreenState extends State<RoadNoticeScreen> {
   CloudApi? api;
   bool isUploaded = false;
   bool loading = false;
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -49,7 +54,10 @@ class _RoadNoticeScreenState extends State<RoadNoticeScreen> {
       loading = true;
     });
     // Upload to Google cloud
-    final response = await api!.save(_imageName!, _imageBytes!);
+    final response = await api!.save(
+      _imageName!,
+      _imageBytes!,
+    );
     print(response.downloadLink);
     setState(() {
       loading = false;
@@ -60,41 +68,98 @@ class _RoadNoticeScreenState extends State<RoadNoticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: _imageBytes == null
-              ? Text('No image selected.')
-              : Stack(
-                  children: [
-                    Image.memory(_imageBytes!),
-                    if (loading)
-                      Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    isUploaded
-                        ? Center(
-                            child: CircleAvatar(
-                              radius: 40,
-                              backgroundColor: Colors.green,
-                              child: Icon(
-                                Icons.check,
-                                color: Colors.white,
-                                size: 60,
-                              ),
-                            ),
-                          )
-                        : Align(
-                            alignment: Alignment.bottomCenter,
-                            child: ElevatedButton(
-                              onPressed: _saveImage,
-                              child: Text('Save to cloud'),
-                            ),
-                          )
-                  ],
-                )),
+      appBar: AppBar(
+        backgroundColor: Colors.white, // AppBar arka plan rengi beyaz
+        elevation: 0, // Gölgelendirme kaldırıldı
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        const ServicesScreen())); // Önceki sayfaya dönme işlevi
+          },
+          icon:
+              const Icon(Icons.arrow_back, color: Colors.black), // Geri butonu
+        ),
+        title: const Text(
+          'Yol İhbarı',
+          style: TextStyle(color: Colors.black), // Başlık metni rengi siyah
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            GestureDetector(
+              onTap: _getImage,
+              child: Container(
+                height: 400, // Belirli bir yükseklik ayarlayın
+                color: Colors.grey[300], // Dilediğiniz arka plan rengi
+                child: _imageBytes == null
+                    ? const Icon(Icons.camera_alt,
+                        size: 50, color: Colors.black) // Kamera simgesi
+                    : Image.memory(_imageBytes!, fit: BoxFit.cover),
+              ),
+            ),
+            SizedBox(height: 20), // Boşluk ekledik
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: _titleController,
+                decoration: const InputDecoration(
+                  labelText: 'Başlık',
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: _descriptionController,
+                decoration: const InputDecoration(
+                  labelText: 'Açıklama',
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                  ),
+                ),
+                maxLines: 3,
+              ),
+            ),
+            SizedBox(height: 20), // Boşluk ekledik
+            if (loading)
+              Center(
+                child: CircularProgressIndicator(),
+              )
+            else if (isUploaded)
+              const Center(
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.green,
+                  child: Icon(
+                    Icons.check,
+                    color: Colors.white,
+                    size: 60,
+                  ),
+                ),
+              )
+            else
+              ElevatedButton(
+                onPressed: _saveImage,
+                child: Text('Gönder'),
+              ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _getImage,
         tooltip: 'Select image',
-        child: Icon(Icons.add_a_photo),
+        child: Icon(Icons.camera_alt),
       ),
     );
   }
