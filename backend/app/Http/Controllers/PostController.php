@@ -13,11 +13,11 @@ class PostController extends Controller
     {
         return response([
             'posts' => Post::orderBy('created_at', 'desc')->with('user:id,name,image')->withCount('comments', 'likes')
-            ->with('likes', function($like){
-                return $like->where('user_id', auth()->user()->id)
-                    ->select('id', 'user_id', 'post_id')->get();
-            })
-            ->get()
+                ->with('likes', function ($like) {
+                    return $like->where('user_id', auth()->user()->id)
+                        ->select('id', 'user_id', 'post_id')->get();
+                })
+                ->get()
         ], 200);
     }
 
@@ -37,12 +37,10 @@ class PostController extends Controller
             'body' => 'required|string'
         ]);
 
-        $image =  $request->file('image')->store('posts', 'public');
-
-        if ($image == null) {
-            return response([
-                'message' => 'Hata.',
-            ], 403);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('posts', 'public');
+        } else {
+            $image = null;
         }
 
         $post = Post::create([
@@ -64,15 +62,13 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
-        if(!$post)
-        {
+        if (!$post) {
             return response([
                 'message' => 'Post not found.'
             ], 403);
         }
 
-        if($post->user_id != auth()->user()->id)
-        {
+        if ($post->user_id != auth()->user()->id) {
             return response([
                 'message' => 'Permission denied.'
             ], 403);
@@ -100,15 +96,13 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
-        if(!$post)
-        {
+        if (!$post) {
             return response([
                 'message' => 'Post not found.'
             ], 403);
         }
 
-        if($post->user_id != auth()->user()->id)
-        {
+        if ($post->user_id != auth()->user()->id) {
             return response([
                 'message' => 'Permission denied.'
             ], 403);
