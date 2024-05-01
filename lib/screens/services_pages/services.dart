@@ -1,6 +1,7 @@
 import 'package:e_belediyecilik/misc/colors.dart';
 import 'package:e_belediyecilik/screens/google_maps_marker_pages/map_page.dart';
 import 'package:e_belediyecilik/screens/moloz_bildir.dart';
+import 'package:e_belediyecilik/screens/post_form_page.dart';
 import 'package:e_belediyecilik/screens/services_pages/clean_city.dart';
 import 'package:e_belediyecilik/screens/services_pages/road_notice.dart';
 import 'package:e_belediyecilik/screens/services_pages/sentius_eczane.dart';
@@ -73,7 +74,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   itemDashboard(' Yol İhbar   \n   Bildirimi', "img/path.png",
                       const RoadNoticeScreen(), 0),
                   itemDashboard('Çevre temizlik \n     Bildirimi',
-                      "img/trash.png", const CleanCityScreen(), 1),
+                      "img/trash.png", const PostFormScreen(), 1),
                   itemDashboard('Evde Bakım', "img/patient.png",
                       const CleanCityScreen(), 2),
                   itemDashboard('Patili Dotlarımız', "img/pets.png",

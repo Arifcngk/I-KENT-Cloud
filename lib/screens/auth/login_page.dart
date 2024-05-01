@@ -1,9 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_belediyecilik/misc/colors.dart';
+import 'package:e_belediyecilik/model/laravel_models/api_response.dart';
 import 'package:e_belediyecilik/model/user_api.dart';
 import 'package:e_belediyecilik/provider/auth_provider.dart';
 import 'package:e_belediyecilik/screens/home_page.dart';
 import 'package:e_belediyecilik/screens/auth/signup_page.dart';
+import 'package:e_belediyecilik/services/laravel_services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart' as x;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,21 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   bool _obscureText = true; // Başlangıçta parolanın gizli olduğunu varsayalım.
   bool loadingStatus = false;
+  bool loading = false;
+
+  void _loginUser() async {
+    ApiResponse response =
+        await login(_emailController.text, _passwordController.text);
+    if (response.error == null) {
+      _saveAndRedirectHome(response.data as User);
+    } else {
+      setState(() {
+        loading = false;
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
+  }
 
   void _saveAndRedirectHome(User user) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -129,37 +146,44 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   //  Google Auth Kullanmak isteyenler için aşağıda yorum satırına alınmış kodu aktif edebilirler.
 
-                  authProvider
-                      .loginWithEmail(
-                          _emailController.text, _passwordController.text)
-                      .then((value) {
-                    if (value != null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomePage(),
-                          ));
-                    } else {
-                      AwesomeDialog(
-                        context: context,
-                        dialogType: DialogType.error,
-                        animType: AnimType.topSlide,
-                        showCloseIcon: true,
-                        title: "Lütfen Kayıt Olun !",
-                        desc:
-                            "Uygulamayı kullanabilmeniz için önce kayıt olmanız gerekmektetir.!",
-                        btnOkOnPress: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SignupPage(),
-                              ));
-                        },
-                      ).show();
-                    }
-                  });
+                  // authProvider
+                  //     .loginWithEmail(
+                  //         _emailController.text, _passwordController.text)
+                  //     .then((value) {
+                  //   if (value != null) {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (context) => const HomePage(),
+                  //         ));
+                  //   } else {
+                  //     AwesomeDialog(
+                  //       context: context,
+                  //       dialogType: DialogType.error,
+                  //       animType: AnimType.topSlide,
+                  //       showCloseIcon: true,
+                  //       title: "Lütfen Kayıt Olun !",
+                  //       desc:
+                  //           "Uygulamayı kullanabilmeniz için önce kayıt olmanız gerekmektetir.!",
+                  //       btnOkOnPress: () {
+                  //         Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //               builder: (context) => const SignupPage(),
+                  //             ));
+                  //       },
+                  //     ).show();
+                  //   }
+                  // });
 
                   // Api Auth Kullanı Aktifdir Dilerseniz yukarıdan google firebase auth kodlarını aktifleştirebilirsiniz
+
+                  if (formKey.currentState!.validate()) {
+                    setState(() {
+                      loading = true;
+                      _loginUser();
+                    });
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),

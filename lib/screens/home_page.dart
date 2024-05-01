@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_belediyecilik/misc/colors.dart';
 import 'package:e_belediyecilik/screens/favorite_page.dart';
 import 'package:e_belediyecilik/screens/google_maps_marker_pages/map_page.dart';
-import 'package:e_belediyecilik/screens/ihbar_akis.dart';
+import 'package:e_belediyecilik/screens/post_page.dart';
 import 'package:e_belediyecilik/screens/services_pages/services.dart';
 import 'package:e_belediyecilik/screens/setting_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -85,19 +85,19 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSpacing: 30,
                 children: [
                   itemDashboard('Hizmetler', CupertinoIcons.person_2_alt,
-                      Colors.orange, ServicesScreen()),
+                      Colors.orange, const ServicesScreen()),
                   itemDashboard('Engelsiz Belediye', CupertinoIcons.ear,
-                      Colors.black, ServicesScreen()),
+                      Colors.black, const ServicesScreen()),
                   itemDashboard('Patili \n Dostlarımız', CupertinoIcons.map,
-                      Colors.purple, GoogleMapView()),
+                      Colors.purple, const GoogleMapView()),
                   itemDashboard('İhbar Akış', CupertinoIcons.chat_bubble_2,
                       Colors.brown, PostScreen()),
                   itemDashboard('E-İhale', CupertinoIcons.money_dollar_circle,
-                      Colors.indigo, ServicesScreen()),
+                      Colors.indigo, const ServicesScreen()),
                   itemDashboard('Hakkımızda', Icons.account_balance_outlined,
-                      Colors.teal, ServicesScreen()),
+                      Colors.teal, const ServicesScreen()),
                   itemDashboard('Favorilerim', CupertinoIcons.heart_fill,
-                      Colors.red, FavoriteScreen()),
+                      Colors.red, const FavoriteScreen()),
                   itemDashboard('Ayarlar', CupertinoIcons.settings, Colors.blue,
                       SettingsScreen()),
                 ],
