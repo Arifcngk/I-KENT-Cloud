@@ -17,7 +17,10 @@ Future<ApiResponse> login(String email, String password) async {
 
     switch (response.statusCode) {
       case 200:
+        print('Case 200 : ${response.body.toString()}');
         apiResponse.data = User.fromjson(jsonDecode(response.body));
+          print('User Token: ${apiResponse.data}');
+
         break;
       case 422:
         final errors = jsonDecode(response.body)['errors'];

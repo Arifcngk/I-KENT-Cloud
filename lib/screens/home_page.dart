@@ -25,17 +25,17 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
+    // getCurrentUser(); // Google ile giriş yapılırsa kullanıcı adı alınır.
   }
-
-  Future<void> getCurrentUser() async {
-    final User? user = _auth.currentUser;
-    final DocumentSnapshot snapshot =
-        await _firestore.collection('users').doc(user!.uid).get();
-    setState(() {
-      userName = snapshot['displayName'];
-    });
-  }
+//  Google ile giriş yapılırsa kullanıcı adı alınır.
+  // Future<void> getCurrentUser() async {
+  //   final User? user = _auth.currentUser;
+  //   final DocumentSnapshot snapshot =
+  //       await _firestore.collection('users').doc(user!.uid).get();
+  //   setState(() {
+  //     userName = snapshot['displayName'];
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 50),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-                  title: Text('Merhaba $userName ',
+                  title: Text('Merhaba Kullanıcı Adı  ',
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall
@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-   itemDashboard(String title, IconData iconData, Color background,
+  itemDashboard(String title, IconData iconData, Color background,
           Widget destinationPage) =>
       GestureDetector(
         onTap: () => Navigator.push(

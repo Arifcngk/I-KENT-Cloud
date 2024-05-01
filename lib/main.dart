@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       child: const MaterialApp(
         title: 'E-Belediyecilik Uygulaması',
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: LoginPage(),
       ),
     );
   }
