@@ -63,7 +63,8 @@ class _CleanCityScreenState extends State<CleanCityScreen> {
         ),
         content: TextFormField(
           controller: ihbarBasligiController,
-          decoration: const InputDecoration(labelText: 'İhbar Başlığını Giriniz'),
+          decoration:
+              const InputDecoration(labelText: 'İhbar Başlığını Giriniz'),
         ),
       ),
       Step(
@@ -75,15 +76,16 @@ class _CleanCityScreenState extends State<CleanCityScreen> {
         ),
       ),
       Step(
-        title:
-            const Text('İhbar Adresi', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('İhbar Adresi',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         content: TextFormField(
           controller: ihbarIcerikController,
           decoration: const InputDecoration(labelText: 'İhbar Adresi'),
         ),
       ),
       Step(
-        title: const Text('Fotoğraf', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Fotoğraf',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:e_belediyecilik/misc/constant.dart';
 import 'package:e_belediyecilik/model/laravel_models/api_response.dart';
 import 'package:e_belediyecilik/model/laravel_models/post.dart';
@@ -11,27 +10,28 @@ Future<ApiResponse> getPosts() async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
+
     final response = await http.get(Uri.parse(postsURL), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token'
     });
+    print('PostUrl : $postsURL');
 
-    switch (response.statusCode) {
-      case 200:
+    if (response.statusCode == 200) {
+      if (response.body.isNotEmpty) {
         apiResponse.data = jsonDecode(response.body)['posts']
             .map((p) => Post.fromJson(p))
             .toList();
-        // we get list of posts, so we need to map each item to post model
-        apiResponse.data as List<dynamic>;
-        break;
-      case 401:
-        apiResponse.error = unauthorized;
-        break;
-      default:
+      } else {
         apiResponse.error = somethingWentWrong;
-        break;
+      }
+    } else if (response.statusCode == 401) {
+      apiResponse.error = unauthorized;
+    } else {
+      apiResponse.error = somethingWentWrong;
     }
   } catch (e) {
+    print('Error in getPosts(): $e');
     apiResponse.error = serverError;
   }
   return apiResponse;
@@ -42,13 +42,15 @@ Future<ApiResponse> createPost(String body, String? image) async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
-    print('Token : $token');
+    print('Create Post Print İçeriği : $postsURL$image');
     final response = await http.post(Uri.parse(postsURL),
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token'
         },
-        body: image != null ? {'body': body, 'image': image} : {'body': body});
+        body: image != null
+            ? {'body': body, 'image': image}
+            : {'body': body, 'image': 'CreatePost Hatası'});
 
     // here if the image is null we just send the body, if not null we send the image too
 

@@ -19,7 +19,7 @@ Future<ApiResponse> login(String email, String password) async {
       case 200:
         print('Case 200 : ${response.body.toString()}');
         apiResponse.data = User.fromjson(jsonDecode(response.body));
-          print('User Token: ${apiResponse.data}');
+        print('User Token: ${apiResponse.data}');
 
         break;
       case 422:
@@ -153,6 +153,15 @@ Future<bool> logout() async {
 
 // Get base64 encoded image
 String? getStringImage(File? file) {
-  if (file == null) return null;
-  return base64Encode(file.readAsBytesSync());
+  if (file == null) {
+    return null;
+  }
+  try {
+    List<int> imageBytes = file.readAsBytesSync();
+    String base64Image = base64Encode(imageBytes);
+    return base64Image;
+  } catch (e) {
+    print("Dosya okuma hatası: $e");
+    return null;
+  }
 }

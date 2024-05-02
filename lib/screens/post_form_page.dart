@@ -1,13 +1,15 @@
 import 'dart:io';
 
+import 'package:e_belediyecilik/misc/colors.dart';
 import 'package:e_belediyecilik/model/laravel_models/api_response.dart';
 import 'package:e_belediyecilik/model/laravel_models/post.dart';
 import 'package:e_belediyecilik/screens/auth/login_page.dart';
+import 'package:e_belediyecilik/screens/post_page.dart';
 import 'package:e_belediyecilik/services/laravel_services/post_service.dart';
 import 'package:e_belediyecilik/services/laravel_services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../misc/constant.dart';
 
 class PostFormScreen extends StatefulWidget {
@@ -38,6 +40,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
 
   void _createPost() async {
     String? image = _imageFile == null ? null : getStringImage(_imageFile);
+    print('Image  Verisi: $image');
     ApiResponse response = await createPost(_txtControllerBody.text, image);
 
     if (response.error == null) {
@@ -61,7 +64,11 @@ class _PostFormScreenState extends State<PostFormScreen> {
   void _editPost(int postId) async {
     ApiResponse response = await editPost(postId, _txtControllerBody.text);
     if (response.error == null) {
-      Navigator.of(context).pop();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PostScreen(),
+          ));
     } else if (response.error == unauthorized) {
       logout().then((value) => {
             Navigator.of(context).pushAndRemoveUntil(
@@ -89,11 +96,12 @@ class _PostFormScreenState extends State<PostFormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Çöp İhbarı Oluştur'),
+        title: const Text('Çöp İhbarı Oluştur'),
       ),
       body: _loading
-          ? const Center(
-              child: CircularProgressIndicator(),
+          ? Center(
+              child: LoadingAnimationWidget.inkDrop(
+                  color: AppColors.blueColor, size: 200),
             )
           : ListView(
               children: [
@@ -138,13 +146,17 @@ class _PostFormScreenState extends State<PostFormScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: kTextButton('Post', () {
+                  child: kTextButton('Talep Oluştur', () {
                     if (_formKey.currentState!.validate()) {
                       setState(() {
                         _loading = !_loading;
                       });
                       if (widget.post == null) {
                         _createPost();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostScreen()));
                       } else {
                         _editPost(widget.post!.id ?? 0);
                       }

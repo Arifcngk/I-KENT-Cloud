@@ -22,6 +22,7 @@ class _PostScreenState extends State<PostScreen> {
   Future<void> retrievePosts() async {
     userId = await getUserId();
     ApiResponse response = await getPosts();
+    print('RetrievePots() metodu içeriği : $response');
 
     if (response.error == null) {
       setState(() {
@@ -29,16 +30,14 @@ class _PostScreenState extends State<PostScreen> {
         _loading = _loading ? !_loading : _loading;
       });
     } else if (response.error == unauthorized) {
-      print(' Hata yakalandı :unauthorized');
       logout().then((value) => {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => LoginPage()),
+                MaterialPageRoute(builder: (context) => const LoginPage()),
                 (route) => false)
           });
     } else {
-      print('Hata Yakalandı : $response.error');
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('${response.error}'),
+        content: Text(' Hata Rapro : ${response.error}'),
       ));
     }
   }
@@ -85,10 +84,10 @@ class _PostScreenState extends State<PostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return _loading
-        ? const Center(child: CircularProgressIndicator())
-        : Scaffold(
-            body: RefreshIndicator(
+    return Scaffold(
+      body: _loading
+          ? const Center(child: CircularProgressIndicator())
+          : RefreshIndicator(
               onRefresh: () {
                 return retrievePosts();
               },
@@ -117,7 +116,7 @@ class _PostScreenState extends State<PostScreen> {
                                           image: post.user!.image != null
                                               ? DecorationImage(
                                                   image: NetworkImage(
-                                                      '${post.user!.image}'))
+                                                      '${post.user!.image!}'))
                                               : null,
                                           borderRadius:
                                               BorderRadius.circular(25),
@@ -153,14 +152,12 @@ class _PostScreenState extends State<PostScreen> {
                                       onSelected: (val) {
                                         if (val == 'edit') {
                                           Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostFormScreen(
-                                                title: 'Edit Post',
-                                                post: post,
-                                              ),
-                                            ),
-                                          );
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PostFormScreen(
+                                                        title: 'Edit Post',
+                                                        post: post,
+                                                      )));
                                         } else {
                                           _handleDeletePost(post.id ?? 0);
                                         }
@@ -183,8 +180,14 @@ class _PostScreenState extends State<PostScreen> {
                                           image: NetworkImage('${post.image}'),
                                           fit: BoxFit.cover)),
                                 )
-                              : SizedBox(
-                                  height: post.image != null ? 0 : 10,
+                              : Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 180,
+                                  margin: const EdgeInsets.only(top: 5),
+                                  decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage('img/logo.png'),
+                                          fit: BoxFit.cover)),
                                 ),
                           Row(
                             children: [
@@ -222,6 +225,6 @@ class _PostScreenState extends State<PostScreen> {
                     );
                   }),
             ),
-          );
+    );
   }
 }

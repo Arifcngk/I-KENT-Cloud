@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                   itemDashboard('Favorilerim', CupertinoIcons.heart_fill,
                       Colors.red, const FavoriteScreen()),
                   itemDashboard('Ayarlar', CupertinoIcons.settings, Colors.blue,
-                      SettingsScreen()),
+                      SettingScreen()),
                 ],
               ),
             ),
