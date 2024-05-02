@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 const baseURL = "http://10.0.2.2:8000/api";
+const imageEm = 'http://localhost:8000/stroge';
 const loginURL = baseURL + '/login';
 const registerURL = baseURL + '/register';
 const logoutURL = baseURL + '/logout';

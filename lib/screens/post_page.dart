@@ -1,7 +1,6 @@
 import 'package:e_belediyecilik/misc/constant.dart';
 import 'package:e_belediyecilik/model/laravel_models/api_response.dart';
 import 'package:e_belediyecilik/model/laravel_models/post.dart';
-import 'package:e_belediyecilik/screens/auth/login_page.dart';
 import 'package:e_belediyecilik/screens/comment.dart';
 import 'package:e_belediyecilik/screens/post_form_page.dart';
 import 'package:e_belediyecilik/services/laravel_services/post_service.dart';
@@ -22,7 +21,6 @@ class _PostScreenState extends State<PostScreen> {
   Future<void> retrievePosts() async {
     userId = await getUserId();
     ApiResponse response = await getPosts();
-    print('RetrievePots() metodu içeriği : $response');
 
     if (response.error == null) {
       setState(() {
@@ -30,14 +28,9 @@ class _PostScreenState extends State<PostScreen> {
         _loading = _loading ? !_loading : _loading;
       });
     } else if (response.error == unauthorized) {
-      logout().then((value) => {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-                (route) => false)
-          });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(' Hata Rapro : ${response.error}'),
+        content: Text('${response.error}'),
       ));
     }
   }
@@ -47,11 +40,6 @@ class _PostScreenState extends State<PostScreen> {
     if (response.error == null) {
       retrievePosts();
     } else if (response.error == unauthorized) {
-      logout().then((value) => {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-                (route) => false)
-          });
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('${response.error}')));
@@ -64,12 +52,6 @@ class _PostScreenState extends State<PostScreen> {
 
     if (response.error == null) {
       retrievePosts();
-    } else if (response.error == unauthorized) {
-      logout().then((value) => {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-                (route) => false)
-          });
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('${response.error}')));
@@ -116,7 +98,7 @@ class _PostScreenState extends State<PostScreen> {
                                           image: post.user!.image != null
                                               ? DecorationImage(
                                                   image: NetworkImage(
-                                                      '${post.user!.image!}'))
+                                                      '${post.user!.image}'))
                                               : null,
                                           borderRadius:
                                               BorderRadius.circular(25),
@@ -180,14 +162,8 @@ class _PostScreenState extends State<PostScreen> {
                                           image: NetworkImage('${post.image}'),
                                           fit: BoxFit.cover)),
                                 )
-                              : Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 180,
-                                  margin: const EdgeInsets.only(top: 5),
-                                  decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage('img/logo.png'),
-                                          fit: BoxFit.cover)),
+                              : SizedBox(
+                                  height: post.image != null ? 0 : 10,
                                 ),
                           Row(
                             children: [

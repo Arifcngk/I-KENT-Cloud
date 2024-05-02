@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -147,44 +147,44 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   //  Google Auth Kullanmak isteyenler için aşağıda yorum satırına alınmış kodu aktif edebilirler.
 
-                  // authProvider
-                  //     .loginWithEmail(
-                  //         _emailController.text, _passwordController.text)
-                  //     .then((value) {
-                  //   if (value != null) {
-                  //     Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //           builder: (context) => const HomePage(),
-                  //         ));
-                  //   } else {
-                  //     AwesomeDialog(
-                  //       context: context,
-                  //       dialogType: DialogType.error,
-                  //       animType: AnimType.topSlide,
-                  //       showCloseIcon: true,
-                  //       title: "Lütfen Kayıt Olun !",
-                  //       desc:
-                  //           "Uygulamayı kullanabilmeniz için önce kayıt olmanız gerekmektetir.!",
-                  //       btnOkOnPress: () {
-                  //         Navigator.push(
-                  //             context,
-                  //             MaterialPageRoute(
-                  //               builder: (context) => const SignupPage(),
-                  //             ));
-                  //       },
-                  //     ).show();
-                  //   }
-                  // });
+                  authProvider
+                      .loginWithEmail(
+                          _emailController.text, _passwordController.text)
+                      .then((value) {
+                    if (value != null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomePage(),
+                          ));
+                    } else {
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.error,
+                        animType: AnimType.topSlide,
+                        showCloseIcon: true,
+                        title: "Lütfen Kayıt Olun !",
+                        desc:
+                            "Uygulamayı kullanabilmeniz için önce kayıt olmanız gerekmektetir.!",
+                        btnOkOnPress: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignupPage(),
+                              ));
+                        },
+                      ).show();
+                    }
+                  });
 
                   // Api Auth Kullanı Aktifdir Dilerseniz yukarıdan google firebase auth kodlarını aktifleştirebilirsiniz
 
-                  if (formKey.currentState!.validate()) {
-                    setState(() {
-                      loading = true;
-                      _loginUser();
-                    });
-                  }
+                  // if (formKey.currentState!.validate()) {
+                  //   setState(() {
+                  //     loading = true;
+                  //     _loginUser();
+                  //   });
+                  // }
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),

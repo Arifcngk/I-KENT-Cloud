@@ -30,27 +30,28 @@ class _SignupPageState extends State<SignupPage> {
   final space = const SizedBox(height: 20);
 
 //  api laravel fonk baslangıcı
-  void _registerUser() async {
-    ApiResponse response = await register(
-        _nameController.text, _emailController.text, _passwordController.text);
-    if (response.error == null) {
-      _saveAndRedirectToHome(response.data as User);
-    } else {
-      setState(() {
-        loading = !loading;
-      });
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('${response.error}')));
-    }
-  }
+  // void _registerUser() async {
+  //   ApiResponse response = await register(
+  //       _nameController.text, _emailController.text, _passwordController.text);
+  //   if (response.error == null) {
+  //     _saveAndRedirectToHome(response.data as User);
+  //   } else {
+  //     setState(() {
+  //       loading = !loading;
+  //     });
+  //     ScaffoldMessenger.of(context)
+  //         .showSnackBar(SnackBar(content: Text('${response.error}')));
+  //   }
+  // }
 
-  void _saveAndRedirectToHome(User user) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString('token', user.token ?? '');
-    await pref.setInt('userId', user.id ?? 0);
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const HomePage()), (route) => false);
-  }
+  // void _saveAndRedirectToHome(User user) async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   await pref.setString('token', user.token ?? '');
+  //   await pref.setInt('userId', user.id ?? 0);
+  //   Navigator.of(context).pushAndRemoveUntil(
+  //       MaterialPageRoute(builder: (context) => const HomePage()),
+  //       (route) => false);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -206,78 +207,78 @@ class _SignupPageState extends State<SignupPage> {
         child: ElevatedButton(
           onPressed: () {
             //-----------------Firebase  ile giriş yapmak için Kodları aktifleştirin------------
-            // if (formKey.currentState!.validate()) {
-            //   authProvider
-            //       .register(
-            //     _nameController.text,
-            //     _emailController.text,
-            //     _passwordController.text,
-            //   )
-            //       .then((value) {
-            //     // Kayıt işlemi başarılı oldu
-            //     AwesomeDialog(
-            //       context: context,
-            //       dialogType: DialogType.success,
-            //       animType: AnimType.topSlide,
-            //       showCloseIcon: true,
-            //       title: "Kayıt İşleminiz Başarılı !",
-            //       desc:
-            //           "E-belediye ailemize hoşgeldiniz hizetlerden yararlanmak için giriş yapınız !",
-            //       btnOkOnPress: () {
-            //         Navigator.push(
-            //             context,
-            //             MaterialPageRoute(
-            //               builder: (context) => const HomePage(),
-            //             ));
-            //       },
-            //     ).show();
-            //   }).catchError((error) {
-            //     // Kayıt işlemi başarısız oldu
-            //     if (error is x.FirebaseAuthException) {
-            //       if (error.code == 'email-already-in-use') {
-            //         // Eğer e-posta adresi zaten kullanılıyorsa, kullanıcıya mesaj göster
-            //         AwesomeDialog(
-            //           context: context,
-            //           dialogType: DialogType.warning,
-            //           animType: AnimType.topSlide,
-            //           showCloseIcon: true,
-            //           title: "Zaten Bir Hesabınız Var !",
-            //           desc:
-            //               " Bir Hesabınız var görünüyor. Giriş Yap Sayfasından Uygulamayı Kullanabilirsiniz. !",
-            //           btnOkOnPress: () {
-            //             Navigator.push(
-            //                 context,
-            //                 MaterialPageRoute(
-            //                   builder: (context) => const LoginPage(),
-            //                 ));
-            //           },
-            //         ).show();
-            //       } else {
-            //         // Diğer hatalar için genel bir hata mesajı göster
-            //         AwesomeDialog(
-            //           context: context,
-            //           dialogType: DialogType.error,
-            //           animType: AnimType.topSlide,
-            //           showCloseIcon: true,
-            //           title: "Hata !",
-            //           desc:
-            //               "Sanırım Bir Şeyler Ters Gitti Lütfen Bizimle İletişime Geçin!",
-            //           btnOkOnPress: () {},
-            //         ).show();
-            //       }
-            //     }
-            //   });
-            // }
-            // //******************************** */
+            if (formKey.currentState!.validate()) {
+              authProvider
+                  .register(
+                _nameController.text,
+                _emailController.text,
+                _passwordController.text,
+              )
+                  .then((value) {
+                // Kayıt işlemi başarılı oldu
+                AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.success,
+                  animType: AnimType.topSlide,
+                  showCloseIcon: true,
+                  title: "Kayıt İşleminiz Başarılı !",
+                  desc:
+                      "E-belediye ailemize hoşgeldiniz hizetlerden yararlanmak için giriş yapınız !",
+                  btnOkOnPress: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
+                        ));
+                  },
+                ).show();
+              }).catchError((error) {
+                // Kayıt işlemi başarısız oldu
+                if (error is x.FirebaseAuthException) {
+                  if (error.code == 'email-already-in-use') {
+                    // Eğer e-posta adresi zaten kullanılıyorsa, kullanıcıya mesaj göster
+                    AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.warning,
+                      animType: AnimType.topSlide,
+                      showCloseIcon: true,
+                      title: "Zaten Bir Hesabınız Var !",
+                      desc:
+                          " Bir Hesabınız var görünüyor. Giriş Yap Sayfasından Uygulamayı Kullanabilirsiniz. !",
+                      btnOkOnPress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginPage(),
+                            ));
+                      },
+                    ).show();
+                  } else {
+                    // Diğer hatalar için genel bir hata mesajı göster
+                    AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.error,
+                      animType: AnimType.topSlide,
+                      showCloseIcon: true,
+                      title: "Hata !",
+                      desc:
+                          "Sanırım Bir Şeyler Ters Gitti Lütfen Bizimle İletişime Geçin!",
+                      btnOkOnPress: () {},
+                    ).show();
+                  }
+                }
+              });
+            }
+            //******************************** */
 
             //Api Register Servisi Baslangıcı
 
-             if(formKey.currentState!.validate()){
-                  setState(() {
-                    loading = !loading;
-                    _registerUser();
-                  });
-                }
+            //  if(formKey.currentState!.validate()){
+            //       setState(() {
+            //         loading = !loading;
+            //         _registerUser();
+            //       });
+            //     }
           },
           child: const Text(
             "Kayıt Ol",

@@ -25,17 +25,18 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // getCurrentUser(); // Google ile giriş yapılırsa kullanıcı adı alınır.
+    getCurrentUser(); // Google ile giriş yapılırsa kullanıcı adı alınır.
   }
+
 //  Google ile giriş yapılırsa kullanıcı adı alınır.
-  // Future<void> getCurrentUser() async {
-  //   final User? user = _auth.currentUser;
-  //   final DocumentSnapshot snapshot =
-  //       await _firestore.collection('users').doc(user!.uid).get();
-  //   setState(() {
-  //     userName = snapshot['displayName'];
-  //   });
-  // }
+  Future<void> getCurrentUser() async {
+    final User? user = _auth.currentUser;
+    final DocumentSnapshot snapshot =
+        await _firestore.collection('users').doc(user!.uid).get();
+    setState(() {
+      userName = snapshot['displayName'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 50),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-                  title: Text('Merhaba Kullanıcı Adı  ',
+                  title: Text('Merhaba  ${userName ?? 'Yükleniyor'} ',
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall
